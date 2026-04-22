@@ -92,18 +92,15 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
   return (
     <div className="min-h-screen p-8 animate-fade-in">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-white tracking-tight">New Run</h1>
           <p className="text-sm text-muted mt-1">Configure your ICP and upload your Apollo export to begin.</p>
         </div>
 
         <div className="grid grid-cols-3 gap-6">
-          {/* Left col - text inputs */}
           <div className="col-span-2 flex flex-col gap-5">
 
-            {/* Job Titles */}
-            <Field label="Job Titles" required>
+            <Field label="Job Titles">
               <input
                 type="text"
                 value={form.jobTitles}
@@ -113,8 +110,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
               />
             </Field>
 
-            {/* Industry */}
-            <Field label="Industry" required>
+            <Field label="Industry">
               <input
                 type="text"
                 value={form.industries}
@@ -124,8 +120,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
               />
             </Field>
 
-            {/* Geography */}
-            <Field label="Geography" required>
+            <Field label="Geography">
               <input
                 type="text"
                 value={form.geography}
@@ -135,7 +130,6 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
               />
             </Field>
 
-            {/* Notes */}
             <Field label="Notes" hint="Additional context for the LLM filter">
               <textarea
                 value={form.notes}
@@ -146,7 +140,6 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
               />
             </Field>
 
-            {/* File upload */}
             <Field label="Apollo CSV Export" required>
               <div
                 onDragOver={e => { e.preventDefault(); setDragOver(true) }}
@@ -187,7 +180,6 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
             </Field>
           </div>
 
-          {/* Right col - checkboxes */}
           <div className="flex flex-col gap-5">
             <CheckGroup label="Seniority Level" options={SENIORITY_OPTIONS} selected={form.seniority} onToggle={v => toggleCheck('seniority', v)} />
             <CheckGroup label="Company Headcount" options={HEADCOUNT_OPTIONS} selected={form.headcount} onToggle={v => toggleCheck('headcount', v)} />
@@ -195,7 +187,6 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
           </div>
         </div>
 
-        {/* Submit */}
         <div className="mt-8 flex items-center gap-4">
           <button
             onClick={handleSubmit}
