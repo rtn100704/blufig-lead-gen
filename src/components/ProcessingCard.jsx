@@ -64,12 +64,14 @@ export default function ProcessingCard({ runId, startTime, onCancel }) {
         </div>
 
         {/* Cancel */}
+        <div className="flex flex-col items-center gap-1"></div>
         <button
           onClick={onCancel}
           className="text-xs text-muted hover:text-white transition-colors underline underline-offset-2"
         >
-          Cancel run
+          Cancel and start over
         </button>
+         <p className="text-xs text-muted/50">The workflow will continue running in the background.</p>
       </div>
     </div>
   )
