@@ -45,7 +45,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
   }
 
   const handleFile = (f) => {
-    if (f && (f.name.endsWith('.csv') || f.name.endsWith('.xlsx'))) {
+    if (f && f.name.endsWith('.csv')) {
       setFile(f)
       setFileName(f.name)
     }
@@ -161,7 +161,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
                   ) : (
                     <>
                       <p className="text-sm text-white">Drop your CSV here or click to browse</p>
-                      <p className="text-xs text-muted mt-0.5">.csv or .xlsx files only</p>
+                      <p className="text-xs text-muted mt-0.5">.csv files only</p>
                     </>
                   )}
                 </div>
@@ -176,7 +176,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
                   </button>
                 )}
               </div>
-              <input ref={fileRef} type="file" accept=".csv,.xlsx" className="hidden" onChange={e => handleFile(e.target.files[0])} />
+              <input ref={fileRef} type="file" accept=".csv" className="hidden" onChange={e => handleFile(e.target.files[0])} />
             </Field>
           </div>
 
