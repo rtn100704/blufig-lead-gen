@@ -113,20 +113,12 @@ export default function ResultCard({ status, runId, startTime, icpConfig, fileNa
               Start New Run
             </button>
           ) : (
-            <>
-              <button
-                onClick={onTryAgain}
-                className="flex-1 py-3 rounded-xl bg-accent text-white font-medium text-sm hover:bg-accent/90 transition-all duration-200"
-              >
-                Try Again
-              </button>
-              <button
-                onClick={onNewRun}
-                className="flex-1 py-3 rounded-xl border border-border text-sm text-white/70 hover:text-white hover:border-muted transition-all duration-200"
-              >
-                New Run
-              </button>
-            </>
+<button
+  onClick={onNewRun}
+  className="flex-1 py-3 rounded-xl bg-accent text-white font-medium text-sm hover:bg-accent/90 transition-all duration-200"
+>
+  Start New Run
+</button>
           )}
         </div>
       </div>
