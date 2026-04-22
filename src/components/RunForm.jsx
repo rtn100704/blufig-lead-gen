@@ -51,7 +51,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
     }
   }
 
-  const canSubmit = form.jobTitles && form.industries && form.geography && file && !submitting
+  const canSubmit = file && !submitting
 
   const handleSubmit = async () => {
     if (!canSubmit) return
