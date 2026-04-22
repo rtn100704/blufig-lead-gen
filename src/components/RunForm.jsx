@@ -15,6 +15,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
     revenue: [],
     geography: '',
     notes: '',
+    messageTemplates: '',
   })
   const [file, setFile] = useState(null)
   const [fileName, setFileName] = useState('')
@@ -32,6 +33,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
         revenue: prefillData.revenue || [],
         geography: prefillData.geography?.join(', ') || '',
         notes: prefillData.notes || '',
+        messageTemplates: prefillData.messageTemplates || '',
       })
       if (prefillFileName) setFileName(prefillFileName + ' (re-upload required)')
     }
@@ -65,6 +67,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
     form.revenue.forEach(v => fd.append('Annual Revenue', v))
     fd.append('Geography (Separate values with comma)', form.geography)
     fd.append('Notes (Additional Context For LLM)', form.notes)
+    fd.append('Message Templates', form.messageTemplates)
     fd.append('Drop_Unfiltered_Data', file)
 
     try {
@@ -80,6 +83,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
         revenue: form.revenue,
         geography: form.geography,
         notes: form.notes,
+        messageTemplates: form.messageTemplates,
       }
 
       onRunStart({ runId, icpConfig, fileName: file.name })
@@ -137,6 +141,16 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
                 placeholder="Pass only Co-Founders and C-suite whose title indicates direct technology leadership..."
                 rows={4}
                 className="input-base resize-none"
+              />
+            </Field>
+
+            <Field label="Message Templates" hint="Use [Name] [Title] [Company Name] [Industry] as placeholders">
+              <textarea
+                value={form.messageTemplates}
+                onChange={e => setForm(f => ({ ...f, messageTemplates: e.target.value }))}
+                placeholder={`[Message 1]\nHi [Name],\n\n...\n\n[Message 2]\nHi [Name],\n\n...`}
+                rows={10}
+                className="input-base resize-none font-mono text-xs"
               />
             </Field>
 
