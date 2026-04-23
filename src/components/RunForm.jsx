@@ -148,7 +148,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
               />
             </Field>
 
-            <Field label="LinkedIn Invitation" hint="Optional — connection request note">
+            <Field label="LinkedIn Invitation">
               <textarea
                value={form.linkedInInvitation}
                onChange={e => setForm(f => ({ ...f, linkedInInvitation: e.target.value }))}
