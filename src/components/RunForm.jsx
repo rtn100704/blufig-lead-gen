@@ -16,6 +16,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
     geography: '',
     notes: '',
     messageTemplates: '',
+    linkedInInvitation: '',
   })
   const [file, setFile] = useState(null)
   const [fileName, setFileName] = useState('')
@@ -34,6 +35,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
         geography: prefillData.geography?.join(', ') || '',
         notes: prefillData.notes || '',
         messageTemplates: prefillData.messageTemplates || '',
+        linkedInInvitation: prefillData.linkedInInvitation || '',
       })
       if (prefillFileName) setFileName(prefillFileName + ' (re-upload required)')
     }
@@ -67,6 +69,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
     form.revenue.forEach(v => fd.append('Annual Revenue', v))
     fd.append('Geography (Separate values with comma)', form.geography)
     fd.append('Notes (Additional Context For LLM)', form.notes)
+    fd.append('LinkedIn Invitation', form.linkedInInvitation)
     fd.append('Message Templates', form.messageTemplates)
     fd.append('Drop_Unfiltered_Data', file)
 
@@ -83,6 +86,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
         revenue: form.revenue,
         geography: form.geography,
         notes: form.notes,
+        linkedInInvitation: form.linkedInInvitation,
         messageTemplates: form.messageTemplates,
       }
 
@@ -143,6 +147,17 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
                 className="input-base resize-none"
               />
             </Field>
+
+            <Field label="LinkedIn Invitation" hint="Optional — connection request note">
+              <textarea
+               value={form.linkedInInvitation}
+               onChange={e => setForm(f => ({ ...f, linkedInInvitation: e.target.value }))}
+               placeholder="Hi [Name], I'm Rushil from..."
+               rows={4}
+               className="input-base resize-none"
+               />
+            </Field>
+
 
             <Field label="Message Templates" hint="Use [Name] [Title] [Company Name] [Industry] as placeholders">
               <textarea
