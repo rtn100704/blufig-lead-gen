@@ -8,15 +8,15 @@ const SHEETS_API_KEY = import.meta.env.VITE_SHEETS_API_KEY
 const SHEET_ID = import.meta.env.VITE_SHEET_ID
 const SHEET_NAME = 'Runs'
 const POLL_INTERVAL = 10000
+const TIMEOUT_MS = 3600000 // 1 hour
 
 export default function Dashboard() {
   const [page, setPage] = useState('home')
-  const [appState, setAppState] = useState('idle') // idle | processing | completed | error
-  const [runData, setRunData] = useState(null) // { runId, startTime, icpConfig, fileName }
-  const [result, setResult] = useState(null) // { driveLink, errorDetails }
+  const [appState, setAppState] = useState('idle')
+  const [runData, setRunData] = useState(null)
+  const [result, setResult] = useState(null)
   const pollRef = useRef(null)
 
-  // On mount - check localStorage for active run
   useEffect(() => {
     const saved = localStorage.getItem('blufig_run')
     if (saved) {
@@ -26,11 +26,9 @@ export default function Dashboard() {
     }
   }, [])
 
-  // Polling
   useEffect(() => {
     if (appState === 'processing' && runData?.runId) {
       pollRef.current = setInterval(() => pollSheets(runData.runId), POLL_INTERVAL)
-      // Poll immediately too
       pollSheets(runData.runId)
     }
     return () => clearInterval(pollRef.current)
@@ -38,6 +36,19 @@ export default function Dashboard() {
 
   const pollSheets = async (runId) => {
     try {
+      // Check timeout first
+      const saved = localStorage.getItem('blufig_run')
+      if (saved) {
+        const { startTime } = JSON.parse(saved)
+        if (Date.now() - startTime > TIMEOUT_MS) {
+          clearInterval(pollRef.current)
+          setResult({ errorDetails: 'Run timed out after 1 hour. Please resubmit.' })
+          setAppState('error')
+          localStorage.removeItem('blufig_run')
+          return
+        }
+      }
+
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${SHEETS_API_KEY}`
       const res = await fetch(url)
       const data = await res.json()
@@ -59,10 +70,12 @@ export default function Dashboard() {
         clearInterval(pollRef.current)
         setResult({ driveLink: row[driveLinkIdx] || '' })
         setAppState('completed')
+        localStorage.removeItem('blufig_run')
       } else if (status === 'error') {
         clearInterval(pollRef.current)
         setResult({ errorDetails: row[errorIdx] || 'Unknown error' })
         setAppState('error')
+        localStorage.removeItem('blufig_run')
       }
     } catch (e) {
       console.error('Poll error:', e)
