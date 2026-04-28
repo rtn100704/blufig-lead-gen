@@ -102,7 +102,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-white tracking-tight">New Run</h1>
-          <p className="text-sm text-muted mt-1">Configure your ICP and upload your Apollo export to begin.</p>
+          <p className="text-sm text-white/50 mt-1">Configure your ICP and upload your Apollo export to begin.</p>
         </div>
 
         <div className="grid grid-cols-3 gap-6">
@@ -190,7 +190,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
                   ) : (
                     <>
                       <p className="text-sm text-white">Drop your CSV here or click to browse</p>
-                      <p className="text-xs text-muted mt-0.5">.csv files only</p>
+                      <p className="text-xs text-white/50 mt-0.5">.csv files only</p>
                     </>
                   )}
                 </div>
@@ -228,7 +228,7 @@ export default function RunForm({ prefillData, prefillFileName, onRunStart }) {
           >
             {submitting ? 'Starting...' : 'Run Workflow'}
           </button>
-          {!file && <p className="text-xs text-muted">Upload a CSV to continue</p>}
+          {!file && <p className="text-xs text-white/50">Upload a CSV to continue</p>}
         </div>
       </div>
 
@@ -256,7 +256,7 @@ function Field({ label, required, hint, children }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <label className="text-sm font-medium text-white/80">{label}</label>
+        <label className="text-sm font-medium text-white/90">{label}</label>
         {required && <span className="text-xs text-accent">*</span>}
         {hint && <span className="text-xs text-muted">{hint}</span>}
       </div>
@@ -268,7 +268,7 @@ function Field({ label, required, hint, children }) {
 function CheckGroup({ label, options, selected, onToggle }) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-medium text-white/80">{label}</label>
+      <label className="text-sm font-medium text-white/90">{label}</label>
       <div className="bg-surface border border-border rounded-xl p-3 flex flex-col gap-1">
         {options.map(opt => (
           <label key={opt} className="flex items-center gap-2.5 cursor-pointer group py-0.5">
@@ -285,7 +285,7 @@ function CheckGroup({ label, options, selected, onToggle }) {
             </div>
             <span
               onClick={() => onToggle(opt)}
-              className={`text-xs transition-colors ${selected.includes(opt) ? 'text-white' : 'text-muted group-hover:text-white/60'}`}
+              className={`text-xs transition-colors ${selected.includes(opt) ? 'text-white' : 'text-white/50 group-hover:text-white/70'}`}
             >
               {opt}
             </span>
